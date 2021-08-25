@@ -85,4 +85,16 @@
     padding: 10px;
     border: 1px solid #000;
   }
+  .registrarse {
+    text-align: center;
+    position: absolute;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.3rem;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    padding: 10px;
+  }
 </style>

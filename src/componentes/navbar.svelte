@@ -1,19 +1,19 @@
-<!-- <div>
-  <h1>Hola desde un componente</h1>
-</div> -->
 <script>
   import { Router, Link, Route } from "svelte-routing";
   import Login from "../vistas/login.svelte";
   import Panel from "../vistas/panel.svelte";
+  import Reg from "../vistas/reg.svelte";
 </script>
 
 <div>
   <img src="../../colegiojulietadel.png" alt="colegiojulietadelfino" />
   <h3>Colegio Julieta Delfino</h3>
+
   <Router>
     <nav>
       <Link to="/">Login</Link>
-      <Link to="/panel">Panel con</Link>
+      <Link to="/panel">Panel</Link>
+      <Link to="/registro">Registrarse por primera vez</Link>
     </nav>
 
     <Route path="/">
@@ -21,6 +21,9 @@
     </Route>
     <Route path="/panel">
       <Panel />
+    </Route>
+    <Route path="/registro">
+      <Reg />
     </Route>
   </Router>
 </div>
