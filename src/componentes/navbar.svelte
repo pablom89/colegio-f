@@ -3,8 +3,8 @@
 </div> -->
 <script>
   import { Router, Link, Route } from "svelte-routing";
-  import Login from "../vistas/Login.svelte";
-  import Panel from "../vistas/Panel.svelte";
+  import Login from "../vistas/login.svelte";
+  import Panel from "../vistas/panel.svelte";
 </script>
 
 <div>
