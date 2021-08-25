@@ -13,7 +13,7 @@
   <Router>
     <nav>
       <Link to="/">Login</Link>
-      <Link to="/panel">Panel</Link>
+      <Link to="/panel">Panel control</Link>
     </nav>
 
     <Route path="/">
