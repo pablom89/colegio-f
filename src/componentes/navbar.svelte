@@ -5,6 +5,7 @@
   import Reg from "../vistas/reg.svelte";
   import AgMat from "../vistas/agregarmateria.svelte";
   import EditMat from "../vistas/editarmateria.svelte";
+  import CrearU from "../vistas/crearusuario.svelte";
 </script>
 
 <div>
@@ -31,6 +32,9 @@
     </Route>
     <Route path="/editarmateria">
       <EditMat />
+    </Route>
+    <Route path="/crearusuario">
+      <CrearU />
     </Route>
   </Router>
 </div>

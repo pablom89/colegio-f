@@ -22,7 +22,7 @@
 
     let infor = await user.json();
 
-    alert(infor.id);
+    //alert(infor.id);
 
     if (infor.id) {
       const ING = await fetch(`https://colegio-b.herokuapp.com/materias`, {

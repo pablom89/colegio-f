@@ -1,5 +1,7 @@
 <script>
   import { navigate } from "svelte-routing";
+  import { chek } from "../store";
+  import { onMount } from "svelte";
   const s = localStorage.getItem("s");
   if (!s) {
     alert("Debe iniciar sesión!");
@@ -7,8 +9,72 @@
     navigate("/", { replace: true });
   }
 
+  onMount(async () => {
+    //alert(`https://colegio-b.herokuapp.com/materias/${$chek}`);
+    if ($chek) {
+      const MAT = await fetch(
+        `https://colegio-b.herokuapp.com/materias/${$chek}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      let infor = await MAT.json();
+
+      document.getElementById("nombre").value = infor.nombre;
+      document.getElementById("nombrecompleto").value = infor.nombre_completo;
+    }
+  });
+
   const editarmat = async () => {
     //alert(m);
+    const info = new FormData(document.getElementById("F4"));
+    let nombre = info.get("nombre");
+    let nombre_completo = info.get("nombrecompleto");
+    let hoy = new Date();
+
+    let user = await fetch(`https://colegio-b.herokuapp.com/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    let inform = await user.json();
+
+    if (inform.id) {
+      const ING = await fetch(
+        `https://colegio-b.herokuapp.com/materias/${$chek}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            nombre,
+            nombre_completo,
+            fecha_vigencia: hoy,
+            fecha_alta: hoy,
+            id_usuario_alta: inform.id,
+            id_usuario_vigencia: inform.id,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((info) => {
+          navigate("/panel", { replace: true });
+        })
+        .catch((error) => {
+          console.log("Error: Usuario o contraseña invalido"); // error.message
+        });
+    } else {
+    }
   };
 </script>
 
@@ -22,7 +88,7 @@
     on:submit|preventDefault={editarmat}
     class="formulario"
   >
-    <h3>Editar Materia:</h3>
+    <h3>Editar Materia: <!--{$chek}--></h3>
     <div class="entrada">
       <label for="nombre">Nombre:</label><input
         type="text"

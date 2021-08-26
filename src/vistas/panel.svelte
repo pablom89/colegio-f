@@ -1,15 +1,49 @@
 <script>
+  import { onMount } from "svelte";
+
   import { navigate } from "svelte-routing";
-  var chek;
-  $: vchek = (() => {
-    if (chek) {
-      alert(chek);
+  import { chek } from "../store";
+  var vachek;
+  var beditar = false;
+  //$: diseditar = alert(deditar);
+  // $: vchek = (() => {
+  //   if (vachek) {
+  //     alert(vachek);
+  //   }
+  //})();
+  $: todasMat = (() => {
+    if (vachektodos !== undefined) {
+      //alert(vachektodos);
+      var achequear = document.querySelectorAll(
+        'input[type="checkbox"]:first-child'
+      );
+      if (!vachektodos) {
+        beditar = false;
+        achequear.forEach((x) => {
+          x.checked = false;
+        });
+      } else {
+        beditar = true;
+        achequear.forEach((x) => {
+          x.checked = true;
+        });
+      }
+      console.log(achequear);
+      // for(i=0; i<achequear.length){};
     }
   })();
+  //alert(document.getElementById("anulart"));
+  var vachektodos;
+  // onMount(() => {
+  //   //alert(document.getElementById("anulart").checked);
+  //   vachektodos = document.getElementById("anulart").checked;
+  // });
+  const cambio = () => {
+    vachektodos = document.getElementById("anulart").checked;
+  };
   const s = localStorage.getItem("s");
   if (!s) {
     alert("Debe iniciar sesión!");
-    //window.location.replace('./login.html');
     navigate("/", { replace: true });
   }
 
@@ -78,17 +112,17 @@
 
   const agm = () => navigate("/agregarmateria", { replace: true });
   const edit = () => {
-    chek = document.querySelector('input[type="checkbox"]:checked').id;
-    //alert(chek);
-    //window.location.replace(`./editarmateria.html?materia=${chek}`);
-    //navigate("/editarmateria", { replace: true });
+    vachek = document.querySelector('input[type="checkbox"]:checked').id;
+    chek.update((n) => (n = vachek));
+    navigate("/editarmateria", { replace: true });
   };
 
   const elm = async () => {
-    var chek = document.querySelector('input[type="checkbox"]:checked').id;
+    vachek = document.querySelector('input[type="checkbox"]:checked').id;
+    chek.update((n) => (n = vachek));
 
     const ELIM = await fetch(
-      `https://colegio-b.herokuapp.com/materias/${chek}`,
+      `https://colegio-b.herokuapp.com/materias/${$chek}`,
       {
         method: "DELETE",
         headers: {
@@ -111,36 +145,49 @@
   };
 
   const anul = async () => {
-    var chek = document.querySelector('input[type="checkbox"]:checked').id;
+    vachek = document.querySelector('input[type="checkbox"]:checked').id;
+    chek.update((n) => (n = vachek));
     var hoy = new Date();
 
-    const ANUL = await fetch(
-      `https://colegio-b.herokuapp.com/materias/${chek}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          anulado: true,
-          vigente: false,
-          fecha_anulada: hoy,
-          id_usuario_anulado: 45,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((info) => {
-        //if (info.user.idv) {
-        console.log(info);
-        datos();
+    let user = await fetch(`https://colegio-b.herokuapp.com/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-        //}
-      })
-      .catch((error) => {
-        alert("Error: Usuario o contraseña invalido"); // error.message
-      });
+    let inform = await user.json();
+
+    if (inform.id) {
+      const ANUL = await fetch(
+        `https://colegio-b.herokuapp.com/materias/${$chek}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            anulado: true,
+            vigente: false,
+            fecha_anulada: hoy,
+            id_usuario_anulado: inform.id,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((info) => {
+          //if (info.user.idv) {
+          console.log(info);
+          datos();
+
+          //}
+        })
+        .catch((error) => {
+          alert("Error: Usuario o contraseña invalido"); // error.message
+        });
+    }
   };
 </script>
 
@@ -151,9 +198,10 @@
     >Cerrar sesión</button
   >
   <button on:click={agm}>Alta de Materia</button>
-  <button on:click={edit}>Editar Materia</button>
-  <button onclick="anul()">Anular Materia</button>
-  <button onclick="elm()">Eliminar Materia</button>
+  <button on:click={edit} disabled={beditar}>Editar Materia</button>
+  <button on:click={anul}>Anular Materia</button>
+  <button on:click={elm}>Eliminar Materia</button>
+  <!-- <span>{$chek}</span> -->
   <br /><br />
   <table style="float: clear">
     <thead>
@@ -172,6 +220,7 @@
           type="checkbox"
           id="anulart"
           name="anulart"
+          on:change={cambio}
         /></td
       >
     </thead>
