@@ -1,4 +1,6 @@
 <script>
+  import { navigate } from "svelte-routing";
+
   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -9,15 +11,88 @@
   }
   var token = getParameterByName("token");
   //alert(token);
+  const crearusuario = async () => {
+    const respuesta = await fetch(
+      `https://colegio-b.herokuapp.com/usuarios-verificados?tokenclave=${token}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(async (res) => {
+        //console.log(res[0]);
+        //console.log("///////HOLA MUNDO //////////");
+        const form = document.querySelector("form");
+        const infor = new FormData(form);
+        var info = res[0];
+        var usuario = infor.get("usuario");
+        var contra = infor.get("contraseña");
+        if (info.tokenclave) {
+          //console.log(info);
+          const actualizarVerificados = await fetch(
+            `https://colegio-b.herokuapp.com/usuarios-verificados/${info.id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                usuario,
+                contra,
+                idv: info.id,
+              }),
+            }
+          )
+            .then((res) => res.json())
+            .then((info) => {
+              console.log(info);
+            });
+
+          ////////////////////// Conectar con la tabla User ////////////////////////////
+
+          const tablauser = await fetch(
+            `https://colegio-b.herokuapp.com/users`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: usuario,
+                email: info.email,
+                password: contra,
+                confirmed: true,
+                idv: info.id,
+              }),
+            }
+          )
+            .then((res) => res.json())
+            .then((info) => {
+              console.log(info);
+            });
+
+          ////////////////////// Conectar con la tabla User ////////////////////////////
+        } else {
+        }
+      });
+
+    alert("Usuario y contraseña creado con exito!");
+    //window.location.href="./login.html";
+    navigate("/", { replace: true });
+  };
 </script>
 
 <div>
   <h1>Alta de usuario</h1>
   <br /><br />
   <form
-    action="https://colegio-b.herokuapp.com/Usuarios"
+    action=""
     method="POST"
     id="F1"
+    on:submit|preventDefault={crearusuario}
     class="formulario"
   >
     <h1>Ingrese su Usuario y Contraseña:</h1>
