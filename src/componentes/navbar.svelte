@@ -6,6 +6,8 @@
   import AgMat from "../vistas/agregarmateria.svelte";
   import EditMat from "../vistas/editarmateria.svelte";
   import CrearU from "../vistas/crearusuario.svelte";
+  import NuevaContra from "../vistas/nuevacontra.svelte";
+  import ResetContra from "../vistas/resetcontra.svelte";
 </script>
 
 <div>
@@ -35,6 +37,12 @@
     </Route>
     <Route path="/crearusuario">
       <CrearU />
+    </Route>
+    <Route path="/nuevacontra">
+      <NuevaContra />
+    </Route>
+    <Route path="/resetcontra">
+      <ResetContra />
     </Route>
   </Router>
 </div>

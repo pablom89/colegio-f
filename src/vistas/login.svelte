@@ -79,7 +79,8 @@
     <button type="submit" class="btn btn-sm btn-primary">
       <i class="bi bi-arrow-right-circle" />
       <span>Continuar</span>
-    </button>
+    </button><br /><br />
+    <Link to="/resetcontra">¿Olvidaste tu contraseña?</Link>
   </form>
 
   <Router>
