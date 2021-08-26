@@ -5,6 +5,7 @@
   import { chek } from "../store";
   var vachek;
   var beditar = false;
+  var j;
   //$: diseditar = alert(deditar);
   // $: vchek = (() => {
   //   if (vachek) {
