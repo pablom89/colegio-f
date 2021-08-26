@@ -1,8 +1,10 @@
 <script>
-  import { Router, Link, Route } from "svelte-routing";
+  import { Router, Link, Route, navigate } from "svelte-routing";
   import Login from "../vistas/login.svelte";
   import Panel from "../vistas/panel.svelte";
   import Reg from "../vistas/reg.svelte";
+  import AgMat from "../vistas/agregarmateria.svelte";
+  import EditMat from "../vistas/editarmateria.svelte";
 </script>
 
 <div>
@@ -11,9 +13,8 @@
 
   <Router>
     <nav>
-      <Link to="/">Login</Link>
-      <Link to="/panel">Panel</Link>
-      <Link to="/registro">Registrarse por primera vez</Link>
+      <Link to="/">Acceder</Link>
+      <Link to="/panel">Mi panel</Link>
     </nav>
 
     <Route path="/">
@@ -25,13 +26,23 @@
     <Route path="/registro">
       <Reg />
     </Route>
+    <Route path="/agregarmateria">
+      <AgMat />
+    </Route>
+    <Route path="/editarmateria">
+      <EditMat />
+    </Route>
   </Router>
 </div>
 
 <style>
+  div {
+    background-color: beige;
+    height: 90px;
+  }
   img {
     max-width: 15%;
-    height: 100px;
+    height: 90px;
     float: left;
   }
   h3 {

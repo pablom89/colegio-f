@@ -1,25 +1,68 @@
 <script>
+  import { Router, Link, Route, navigate } from "svelte-routing";
+
   let email = "",
     password = "";
 
-  const procesarFormulario = () => {
-    if (!email.trim() || !password.trim()) {
-      console.log("campos vacios");
+  const procesarFormulario = async () => {
+    /*if (!email.trim() || !password.trim()) {
+      alert("Debe ingresar sus datos!");
       return;
+    }
+*/
+    //alert(password);
+    const info = new FormData(document.getElementById("F1"));
+    console.log(info);
+    var email = info.get("email");
+    var contra = info.get("contra");
+
+    if (!email.trim() || !contra.trim()) {
+      alert("Debe ingresar sus datos!");
+      return;
+    } else {
+      const ING = await fetch(`https://colegio-b.herokuapp.com/auth/local`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          identifier: email,
+          password: contra,
+        }),
+      })
+        .then((res) => res.json())
+        .then((info) => {
+          if (info.user.idv) {
+            console.log(info);
+            alert("Bienvenido " + info.user.idv.nombre);
+            window.localStorage.setItem("s", true);
+            //window.location.replace("./panelusuario.html");
+            navigate("/panel", { replace: true });
+          }
+        })
+        .catch((error) => {
+          alert("Error: Usuario o contraseña invalido"); // error.message
+        });
     }
   };
 </script>
 
 <div class="contenedor">
   <br />
-  <form on:submit|preventDefault={procesarFormulario} class="formulario">
+  <form
+    on:submit|preventDefault={procesarFormulario}
+    class="formulario"
+    id="F1"
+  >
     <h4>Acceder al sistema</h4>
     <div class="entrada">
-      <label for="usuario" class="form-label">Usuario:</label>
+      <label for="email" class="form-label">Email:</label>
       <input
         type="email"
         placeholder="Ingrese su email o usuario"
-        id="usuario"
+        id="email"
+        name="email"
         bind:value={email}
       />
     </div>
@@ -29,6 +72,7 @@
         type="password"
         placeholder="Ingrese su contraseña"
         id="contra"
+        name="contra"
         bind:value={password}
       />
     </div>
@@ -37,6 +81,16 @@
       <span>Continuar</span>
     </button>
   </form>
+
+  <Router>
+    <nav>
+      <Link to="/registro">
+        <button class="btn btn-dark registrarse"
+          >Registrarse por primera vez</button
+        >
+      </Link>
+    </nav>
+  </Router>
 </div>
 
 <style>
