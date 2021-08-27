@@ -87,7 +87,7 @@
                     <td style="border: 1px solid black; border-collapse: collapse;">${valor.sexo}</td>
                     <td style="border: 1px solid black; border-collapse: collapse;">${valor.nacionalidad}</td>
                     <td style="border: 1px solid black; border-collapse: collapse;"><img src=${urlfoto} style="width: 33px"></td>
-                    <td style="border: 1px solid black; border-collapse: collapse;"><button on:click={confirmar(${valor.id})}>Confirmar</button></td>     
+                    <td style="border: 1px solid black; border-collapse: collapse;"><button onclick='confirmar(${valor.id})'>Confirmar</button></td>     
                 </tr>
                 `;
       }
