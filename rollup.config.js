@@ -9,7 +9,7 @@ import serve from 'rollup-plugin-serve';
 
 const production = !process.env.ROLLUP_WATCH;
 
-function serve() {
+/*function serve() {
 	let server;
 
 	function toExit() {
@@ -29,7 +29,7 @@ function serve() {
 		}
 	};
 }
-
+*/
 export default {
 	input: 'src/main.js',
 	output: {
@@ -46,8 +46,9 @@ export default {
 			}
 		}),
 		serve({
-   			historyApiFallback: true
-		}),
+			contentBase: 'public',
+			historyApiFallback: true,
+		})
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
