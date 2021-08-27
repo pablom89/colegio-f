@@ -21,6 +21,7 @@
       <Link to="/panel">Mi panel</Link>
       <Link to="/usuariosregistrados">Usuarios registrados</Link>
       <Link to="/crearusuario">Crear Usuario</Link>
+      <Link to="/resetcontra">Reset contra</Link>
     </nav>
 
     <Route path="/">
