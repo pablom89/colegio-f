@@ -8,6 +8,7 @@
   import CrearU from "../vistas/crearusuario.svelte";
   import NuevaContra from "../vistas/nuevacontra.svelte";
   import ResetContra from "../vistas/resetcontra.svelte";
+  import Uregistrados from "../vistas/usuariosregistrados.svelte";
 </script>
 
 <div>
@@ -18,6 +19,7 @@
     <nav>
       <Link to="/">Acceder</Link>
       <Link to="/panel">Mi panel</Link>
+      <Link to="/usuariosregistrados">Usuarios registrados</Link>
     </nav>
 
     <Route path="/">
@@ -43,6 +45,9 @@
     </Route>
     <Route path="/resetcontra">
       <ResetContra />
+    </Route>
+    <Route path="/usuariosregistrados">
+      <Uregistrados />
     </Route>
   </Router>
 </div>
