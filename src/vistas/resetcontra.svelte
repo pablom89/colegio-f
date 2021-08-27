@@ -21,7 +21,7 @@
       .then((response) => {
         // Handle success.
         alert("Se ha enviado un email a su casilla de correo!");
-        //window.location.replace('./login.html');
+
         navigate("/", { replace: true });
       })
       .catch((error) => {

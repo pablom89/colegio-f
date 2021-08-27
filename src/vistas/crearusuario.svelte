@@ -10,7 +10,6 @@
       : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
   var token = getParameterByName("token");
-  //alert(token);
   const crearusuario = async () => {
     const respuesta = await fetch(
       `https://colegio-b.herokuapp.com/usuarios-verificados?tokenclave=${token}`,
@@ -29,7 +28,7 @@
         var usuario = infor.get("usuario");
         var contra = infor.get("contraseña");
         if (info.tokenclave) {
-          //console.log(info);
+
           const actualizarVerificados = await fetch(
             `https://colegio-b.herokuapp.com/usuarios-verificados/${info.id}`,
             {

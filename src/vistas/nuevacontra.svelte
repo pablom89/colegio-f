@@ -33,14 +33,14 @@
         response.json();
       })
       .then((response) => {
-        // Handle success.
+
         alert("Contraseña cambiada con exito!");
         console.log(response);
-        //window.location.href="./login.html";
+
         navigate("/", { replace: true });
       })
       .catch((error) => {
-        // Handle error.
+
         console.log("An error occurred:", error.response);
       });
   };
