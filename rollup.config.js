@@ -29,7 +29,15 @@ const production = !process.env.ROLLUP_WATCH;
 		}
 	};
 }
+
 */
+
+function serve() {
+  return {
+    writeBundle() {},
+  };
+}
+
 export default {
 	input: 'src/main.js',
 	output: {
