@@ -20,6 +20,7 @@
       <Link to="/">Acceder</Link>
       <Link to="/panel">Mi panel</Link>
       <Link to="/usuariosregistrados">Usuarios registrados</Link>
+      <Link to="/crearusuario">Crear Usuario</Link>
     </nav>
 
     <Route path="/">
