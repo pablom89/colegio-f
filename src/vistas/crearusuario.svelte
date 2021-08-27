@@ -23,8 +23,6 @@
     )
       .then((res) => res.json())
       .then(async (res) => {
-        //console.log(res[0]);
-        //console.log("///////HOLA MUNDO //////////");
         const form = document.querySelector("form");
         const infor = new FormData(form);
         var info = res[0];
