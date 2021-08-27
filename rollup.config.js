@@ -32,11 +32,6 @@ const production = !process.env.ROLLUP_WATCH;
 
 */
 
-function serve() {
-  return {
-    writeBundle() {},
-  };
-}
 
 export default {
 	input: 'src/main.js',
@@ -53,10 +48,7 @@ export default {
 				dev: !production
 			}
 		}),
-		serve({
-			contentBase: 'public',
-			historyApiFallback: true,
-		}),
+		serve('public'),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
